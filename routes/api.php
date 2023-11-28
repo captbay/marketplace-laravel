@@ -35,4 +35,12 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function ()
     Route::get('dataLogin', [AuthController::class, 'userLogin']);
     // update data user login
     Route::put('update', [AuthController::class, 'updateUserLogin']);
+    // upload or update profile_picture
+    Route::post('uploadProfilePicture', [AuthController::class, 'uploadProfilePicture']);
+    // delete profile_picture
+    Route::delete('deleteProfilePicture', [AuthController::class, 'deleteProfilePicture']);
+    // upload or update background_picture
+    Route::post('uploadBackgroundPicture', [AuthController::class, 'uploadBackgroundPicture']);
+    // delete background_picture
+    Route::delete('deleteBackgroundPicture', [AuthController::class, 'deleteBackgroundPicture']);
 });

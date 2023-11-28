@@ -349,4 +349,212 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    // uploadProfilePicture
+    public function uploadProfilePicture(Request $request)
+    {
+        try {
+            $validatedData = Validator::make($request->all(), [
+                'profile_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+
+            //response error validation
+            if ($validatedData->fails()) {
+                return response()->json(['message' => $validatedData->errors()], 422);
+            }
+
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 'KONSUMEN':
+                    $data = $user->konsumen;
+                    $message = 'Berhasil Upload Profile Picture KONSUMEN';
+                    break;
+
+                case 'PENGUSAHA':
+                    $data = $user->pengusaha;
+                    $message = ' Berhasil Upload Profile Picture PENGUSAHA';
+                    break;
+
+                default:
+                    $data = null;
+                    $message = 'Unknown role';
+                    break;
+            }
+
+            // if profile_picture is not null
+            if ($data->profile_picture != null) {
+                // delete old profile_picture
+                unlink(public_path('storage/' . $data->profile_picture));
+            }
+
+            // upload new profile_picture
+            $profile_picture = $request->file('profile_picture');
+            $profile_picture_name = time() . '_' . $profile_picture->getClientOriginalName();
+            $profile_picture->storeAs('public/profile_picture', $profile_picture_name);
+
+            $data->update([
+                'profile_picture' => 'profile_picture/' . $profile_picture_name,
+            ]);
+
+            return response()->json([
+                'data' => $data,
+                'message' => $message
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // deleteProfilePicture
+    public function deleteProfilePicture()
+    {
+        try {
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 'KONSUMEN':
+                    $data = $user->konsumen;
+                    $message = 'Berhasil Delete Profile Picture KONSUMEN';
+                    break;
+
+                case 'PENGUSAHA':
+                    $data = $user->pengusaha;
+                    $message = ' Berhasil Delete Profile Picture PENGUSAHA';
+                    break;
+
+                default:
+                    $data = null;
+                    $message = 'Unknown role';
+                    break;
+            }
+
+            // if profile_picture is not null
+            if ($data->profile_picture != null) {
+                // delete old profile_picture
+                unlink(public_path('storage/' . $data->profile_picture));
+
+                $data->update([
+                    'profile_picture' => null,
+                ]);
+            }
+
+            return response()->json([
+                'data' => $data,
+                'message' => $message
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // uploadBackgroundPicture
+    public function uploadBackgroundPicture(Request $request)
+    {
+        try {
+            $validatedData = Validator::make($request->all(), [
+                'background_picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+
+            //response error validation
+            if ($validatedData->fails()) {
+                return response()->json(['message' => $validatedData->errors()], 422);
+            }
+
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 'KONSUMEN':
+                    $data = $user->konsumen;
+                    $message = 'Berhasil Upload Background Picture KONSUMEN';
+                    break;
+
+                case 'PENGUSAHA':
+                    $data = $user->pengusaha;
+                    $message = ' Berhasil Upload Background Picture PENGUSAHA';
+                    break;
+
+                default:
+                    $data = null;
+                    $message = 'Unknown role';
+                    break;
+            }
+
+            // if background_picture is not null
+            if ($data->background_picture != null) {
+                // delete old background_picture
+                unlink(public_path('storage/' . $data->background_picture));
+            }
+
+            // upload new background_picture
+            $background_picture = $request->file('background_picture');
+            $background_picture_name = time() . '_' . $background_picture->getClientOriginalName();
+            $background_picture->storeAs('public/background_picture', $background_picture_name);
+
+            $data->update([
+                'background_picture' => 'background_picture/' . $background_picture_name,
+            ]);
+
+            return response()->json([
+                'data' => $data,
+                'message' => $message
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // deleteBackgroundPicture
+    public function deleteBackgroundPicture()
+    {
+        try {
+            $user = Auth::user();
+
+            switch ($user->role) {
+                case 'KONSUMEN':
+                    $data = $user->konsumen;
+                    $message = 'Berhasil Delete Background Picture KONSUMEN';
+                    break;
+
+                case 'PENGUSAHA':
+                    $data = $user->pengusaha;
+                    $message = ' Berhasil Delete Background Picture PENGUSAHA';
+                    break;
+
+                default:
+                    $data = null;
+                    $message = 'Unknown role';
+                    break;
+            }
+
+            // if background_picture is not null
+            if ($data->background_picture != null) {
+                // delete old background_picture
+                unlink(public_path('storage/' . $data->background_picture));
+
+                $data->update([
+                    'background_picture' => null,
+                ]);
+            }
+
+            return response()->json([
+                'data' => $data,
+                'message' => $message
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }
