@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FavProductController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\TokoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +46,44 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function ()
     Route::post('uploadBackgroundPicture', [AuthController::class, 'uploadBackgroundPicture']);
     // delete background_picture
     Route::delete('deleteBackgroundPicture', [AuthController::class, 'deleteBackgroundPicture']);
+});
+
+// toko
+Route::group(['prefix' => 'toko', 'middleware' => ['auth:sanctum']], function () {
+    // get data toko
+    Route::get('data', [TokoController::class, 'index']);
+    // get data toko by id
+    Route::get('data/{id}', [TokoController::class, 'show']);
+    // create toko
+    Route::post('create', [TokoController::class, 'store']);
+    // update toko
+    Route::post('update/{id}', [TokoController::class, 'update']);
+    // delete toko
+    Route::delete('delete/{id}', [TokoController::class, 'destroy']);
+});
+
+// produk
+Route::group(['prefix' => 'produk', 'middleware' => ['auth:sanctum']], function () {
+    // get data produk by id
+    Route::get('data/{id}', [ProdukController::class, 'show']);
+    // create produk
+    Route::post('create', [ProdukController::class, 'store']);
+    // update produk
+    Route::post('update/{id}', [ProdukController::class, 'update']);
+    // delete produk
+    Route::delete('delete/{id}', [ProdukController::class, 'destroy']);
+});
+
+// fav_produk
+Route::group(['prefix' => 'fav', 'middleware' => ['auth:sanctum']], function () {
+    // get data fav_produk
+    Route::get('data', [FavProductController::class, 'index']);
+    // post fav
+    Route::post('create/{id}', [FavProductController::class, 'store']);
+});
+
+// feed
+Route::group(['prefix' => 'feed', 'middleware' => ['auth:sanctum']], function () {
+    // get data produk
+    Route::get('data', [ProdukController::class, 'index']);
 });

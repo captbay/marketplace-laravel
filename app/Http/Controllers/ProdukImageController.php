@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produk_image;
 use App\Http\Requests\StoreProduk_imageRequest;
 use App\Http\Requests\UpdateProduk_imageRequest;
+use Illuminate\Http\Request;
 
 class ProdukImageController extends Controller
 {
@@ -17,17 +18,9 @@ class ProdukImageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProduk_imageRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,15 +28,7 @@ class ProdukImageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Produk_image $produk_image)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Produk_image $produk_image)
+    public function show($id)
     {
         //
     }
@@ -51,7 +36,7 @@ class ProdukImageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProduk_imageRequest $request, Produk_image $produk_image)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -59,7 +44,7 @@ class ProdukImageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produk_image $produk_image)
+    public function destroy($id)
     {
         //
     }

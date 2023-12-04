@@ -10,6 +10,7 @@ class Toko extends Model
     use HasFactory;
 
     protected $table = 'tokos';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'pengusaha_id',

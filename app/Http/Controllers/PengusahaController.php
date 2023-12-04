@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengusaha;
 use App\Http\Requests\StorePengusahaRequest;
 use App\Http\Requests\UpdatePengusahaRequest;
+use Illuminate\Http\Request;
 
 class PengusahaController extends Controller
 {
@@ -17,17 +18,9 @@ class PengusahaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePengusahaRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,15 +28,7 @@ class PengusahaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pengusaha $pengusaha)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pengusaha $pengusaha)
+    public function show($id)
     {
         //
     }
@@ -51,7 +36,7 @@ class PengusahaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePengusahaRequest $request, Pengusaha $pengusaha)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -59,7 +44,7 @@ class PengusahaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pengusaha $pengusaha)
+    public function destroy($id)
     {
         //
     }
