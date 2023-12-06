@@ -97,7 +97,7 @@ class TokoController extends Controller
     public function show($id)
     {
         // get data toko by id
-        $toko = Toko::with('produk')->find($id);
+        $toko = Toko::with('produk' . 'produk.produk_image')->find($id);
 
         // check if data toko exists
         if (!$toko) {
