@@ -16,6 +16,14 @@ class FavProductController extends Controller
      */
     public function index()
     {
+        // if not konsumen
+        if (Auth::user()->role != 'KONSUMEN') {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not konsumen',
+            ], 401);
+        }
+
         // get all data fav_product
         $fav_product = Fav_product::with(['produk' => function ($q) {
             $q->with('produk_image', 'toko');
