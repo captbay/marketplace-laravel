@@ -68,10 +68,10 @@
 
 ## Produk per produk
 
--   CREATE produk to toko including produk_image (many)
--   UPDATE produk toko including produk_image (many)
--   GET detail produk ( to update produk)
--   DELETE produk
+-   CREATE produk to toko including produk_image (many) ✅
+-   UPDATE produk toko including produk_image (many) ✅
+-   GET detail produk ( to update produk) ✅
+-   DELETE produk ✅
 
 ## FAVORITE PRODUK
 
@@ -80,4 +80,4 @@
 
 ## FEED user
 
--   SHOW all produk (terbaru and search by name and grup by categories name) ✅
+-   SHOW all produk (terbaru and search by name and grup by categories name)

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
             // fk to tables tokos
-            $table->foreignId('toko_id')->constrained('tokos');
+            $table->foreignId('toko_id')->constrained('tokos')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->text('description');
             $table->integer('price');

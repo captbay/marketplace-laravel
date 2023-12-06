@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pengusahas', function (Blueprint $table) {
             $table->id();
             // fk to tables users
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('phone_number');
             $table->text('address');

@@ -20,8 +20,16 @@ class FavProductController extends Controller
         $fav_product = Fav_product::with(['produk' => function ($q) {
             $q->with('produk_image', 'toko');
         }])
-            ->where('konsumen_id', Auth::user()->id)
+            ->where('konsumen_id', Auth::user()->konsumen->id)
             ->get();
+
+        // if count fav_products == 0
+        if (count($fav_product) == 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Fav_product Not Found',
+            ], 404);
+        }
 
         // return response
         return response()->json([
@@ -36,6 +44,14 @@ class FavProductController extends Controller
      */
     public function store($id)
     {
+        // if not konsumen
+        if (Auth::user()->role != 'KONSUMEN') {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are not konsumen',
+            ], 401);
+        }
+
         // find produk by id
         $produk = Produk::find($id);
 
@@ -48,7 +64,7 @@ class FavProductController extends Controller
         }
 
         // find fav_product by id
-        $fav_product = Fav_product::where('produk_id', $id)->where('konsumen_id', Auth::user()->id)->first();
+        $fav_product = Fav_product::where('produk_id', $id)->where('konsumen_id', Auth::user()->konsumen->id)->first();
 
         // if fav_product exist delete
         if ($fav_product) {
@@ -63,7 +79,7 @@ class FavProductController extends Controller
 
         // if fav_product not exist create new fav_product
         $data = Fav_product::create([
-            'konsumen_id' => Auth::user()->id,
+            'konsumen_id' => Auth::user()->konsumen->id,
             'produk_id'   => $id
         ]);
 

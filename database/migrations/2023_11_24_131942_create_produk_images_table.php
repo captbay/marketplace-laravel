@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('produk_images', function (Blueprint $table) {
             $table->id();
             // fk to tables produks
-            $table->foreignId('produk_id')->constrained('produks');
+            $table->foreignId('produk_id')->constrained('produks')->onUpdate('cascade')->onDelete('cascade');
             $table->string('original_name');
             $table->string('generated_name');
             $table->timestamps();

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tokos', function (Blueprint $table) {
             $table->id();
             // fk to tables pengushas
-            $table->foreignId('pengusaha_id')->constrained('pengusahas');
+            $table->foreignId('pengusaha_id')->constrained('pengusahas')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('phone_number');
             $table->text('address');
