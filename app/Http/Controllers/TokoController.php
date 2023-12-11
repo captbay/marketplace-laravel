@@ -16,7 +16,7 @@ class TokoController extends Controller
     public function index()
     {
         // get data toko
-        $toko = Toko::all();
+        $toko = Toko::with('produk.produk_image')->get();
 
         // return response
         return response()->json([
@@ -155,14 +155,14 @@ class TokoController extends Controller
                     // delete old toko_pp
                     if ($toko->toko_pp != null) {
                         $old_toko_pp = $toko->toko_pp;
-                        $old_toko_pp_path = public_path('storage/' . $old_toko_pp);
+                        $old_toko_pp_path = public_path('storage/public/' . $old_toko_pp);
                         unlink($old_toko_pp_path);
                     }
 
                     // delete old toko_bg
                     if ($toko->toko_bg != null) {
                         $old_toko_bg = $toko->toko_bg;
-                        $old_toko_bg_path = public_path('storage/' . $old_toko_bg);
+                        $old_toko_bg_path = public_path('storage/public/' . $old_toko_bg);
                         unlink($old_toko_bg_path);
                     }
 
@@ -248,14 +248,14 @@ class TokoController extends Controller
                     // delete toko_pp
                     if ($toko->toko_pp != null) {
                         $old_toko_pp = $toko->toko_pp;
-                        $old_toko_pp_path = public_path('storage/' . $old_toko_pp);
+                        $old_toko_pp_path = public_path('storage/public/' . $old_toko_pp);
                         unlink($old_toko_pp_path);
                     }
 
                     // delete toko_bg
                     if ($toko->toko_bg != null) {
                         $old_toko_bg = $toko->toko_bg;
-                        $old_toko_bg_path = public_path('storage/' . $old_toko_bg);
+                        $old_toko_bg_path = public_path('storage/public/' . $old_toko_bg);
                         unlink($old_toko_bg_path);
                     }
 
@@ -287,5 +287,19 @@ class TokoController extends Controller
                 'message' => 'An error occurred: ' . $th->getMessage(),
             ], 500);
         }
+    }
+
+    // getTokoByPengusaha
+    public function getTokoByPengusaha()
+    {
+        // get data toko by pengusaha
+        $toko = Toko::with('produk.produk_image')->where('pengusaha_id', Auth::user()->pengusaha->id)->get();
+
+        // return response
+        return response()->json([
+            'success' => true,
+            'message' => 'List Data Toko',
+            'data'    => $toko
+        ], 200);
     }
 }

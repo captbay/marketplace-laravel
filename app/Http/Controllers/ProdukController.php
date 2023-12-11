@@ -239,7 +239,7 @@ class ProdukController extends Controller
                     $produk_image = Produk_image::where('produk_id', $produk->id)->get();
                     foreach ($produk_image as $image) {
                         // delete image from storage
-                        unlink(public_path('storage/' . $image->generated_name));
+                        unlink(public_path('storage/public/' . $image->generated_name));
 
                         // delete produk_image
                         $image->delete();
@@ -319,7 +319,7 @@ class ProdukController extends Controller
             $produk_image = Produk_image::where('produk_id', $produk->id)->get();
             foreach ($produk_image as $image) {
                 // delete image from storage
-                unlink(public_path('storage/' . $image->generated_name));
+                unlink(public_path('storage/public/' . $image->generated_name));
 
                 // delete produk_image
                 $image->delete();

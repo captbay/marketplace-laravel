@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FavProductController;
+use App\Http\Controllers\KonsumenController;
+use App\Http\Controllers\PengusahaController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TokoController;
 use Illuminate\Http\Request;
@@ -60,6 +62,8 @@ Route::group(['prefix' => 'toko', 'middleware' => ['auth:sanctum']], function ()
     Route::post('update/{id}', [TokoController::class, 'update']);
     // delete toko
     Route::delete('delete/{id}', [TokoController::class, 'destroy']);
+    // get toko by pengusaha
+    Route::get('dataByPengusaha', [TokoController::class, 'getTokoByPengusaha']);
 });
 
 // produk
@@ -86,4 +90,14 @@ Route::group(['prefix' => 'fav', 'middleware' => ['auth:sanctum']], function () 
 Route::group(['prefix' => 'feed', 'middleware' => ['auth:sanctum']], function () {
     // get data produk
     Route::get('data', [ProdukController::class, 'index']);
+});
+
+// konsumen
+Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function () {
+    // get data customer
+    Route::get('customer', [KonsumenController::class, 'customer']);
+    // get data oengusaha
+    Route::get('pengusaha', [PengusahaController::class, 'pengusaha']);
+    // delete user
+    Route::delete('delete/{id}', [AuthController::class, 'destroy']);
 });

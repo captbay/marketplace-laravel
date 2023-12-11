@@ -79,6 +79,20 @@ class AuthController extends Controller
                         'token_type' => 'Bearer',
                         'access_token' => $token
                     ], 200);
+                } else if ($user->role == 'admin') {
+                    return response()->json([
+                        'data' => null,
+                        'email' => $user->email,
+                        'message' => 'Authenticated as a admin active',
+                        'role' => 'admin',
+                        'token_type' => 'Bearer',
+                        'access_token' => $token
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Not eligible to login',
+                    ], 404);
                 }
             } else {
                 return response()->json([
@@ -385,7 +399,7 @@ class AuthController extends Controller
             // if profile_picture is not null
             if ($data->profile_picture != null) {
                 // delete old profile_picture
-                unlink(public_path('storage/' . $data->profile_picture));
+                unlink(public_path('storage/public/' . $data->profile_picture));
             }
 
             // upload new profile_picture
@@ -435,7 +449,7 @@ class AuthController extends Controller
             // if profile_picture is not null
             if ($data->profile_picture != null) {
                 // delete old profile_picture
-                unlink(public_path('storage/' . $data->profile_picture));
+                unlink(public_path('storage/public/' . $data->profile_picture));
 
                 $data->update([
                     'profile_picture' => null,
@@ -489,7 +503,7 @@ class AuthController extends Controller
             // if background_picture is not null
             if ($data->background_picture != null) {
                 // delete old background_picture
-                unlink(public_path('storage/' . $data->background_picture));
+                unlink(public_path('storage/public/' . $data->background_picture));
             }
 
             // upload new background_picture
@@ -539,7 +553,7 @@ class AuthController extends Controller
             // if background_picture is not null
             if ($data->background_picture != null) {
                 // delete old background_picture
-                unlink(public_path('storage/' . $data->background_picture));
+                unlink(public_path('storage/public/' . $data->background_picture));
 
                 $data->update([
                     'background_picture' => null,
@@ -554,6 +568,46 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Error: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    // destroy
+    public function destroy($id)
+    {
+        try {
+            $user = User::find($id);
+
+            // if user is not null
+            if ($user != null) {
+                // if profile_picture is not null
+                if ($user->profile_picture != null) {
+                    // delete old profile_picture
+                    unlink(public_path('storage/public/' . $user->profile_picture));
+                }
+
+                // if background_picture is not null
+                if ($user->background_picture != null) {
+                    // delete old background_picture
+                    unlink(public_path('storage/public/' . $user->background_picture));
+                }
+
+                $user->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'User deleted successfully',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User failed to delete',
+                ], 409);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error: ' . $e->getMessage()
             ], 500);
         }
     }

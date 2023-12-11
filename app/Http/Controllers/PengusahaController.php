@@ -9,6 +9,19 @@ use Illuminate\Http\Request;
 
 class PengusahaController extends Controller
 {
+
+    // pengusaha
+    public function pengusaha()
+    {
+        $data = Pengusaha::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success get Pengusaha',
+            'data' => $data
+        ], 200);
+    }
+
     /**
      * Display a listing of the resource.
      */

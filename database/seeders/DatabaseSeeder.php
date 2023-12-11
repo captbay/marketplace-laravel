@@ -21,6 +21,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // create user role admin
+        User::create([
+            'password' => 'admin',
+            'role' => 'admin',
+            'email' => 'admin@gmail.com'
+        ]);
+
         // Create pengusaha and konsumen base on user
         Toko::factory(10)->create(); // already create pengusaha and user
         Konsumen::factory(10)->create(); // already create user
