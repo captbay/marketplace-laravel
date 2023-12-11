@@ -79,6 +79,14 @@ class ProdukController extends Controller
                 return response()->json(['message' => $validatedData->errors()], 422);
             }
 
+            // if auth != pengusaha toko_id != produk->toko_id
+            if (Auth::user()->pengusaha->toko->id == null) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Buatlah toko dulu',
+                ], 403);
+            }
+
             // find toko by id
             $toko = Toko::find(Auth::user()->pengusaha->toko->id);
 
