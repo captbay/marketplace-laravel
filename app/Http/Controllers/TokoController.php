@@ -152,22 +152,15 @@ class TokoController extends Controller
                 // check if auth user is owner of the toko
                 if (Auth::user()->pengusaha->id == $toko->pengusaha_id) {
 
-                    // delete old toko_pp
-                    if ($toko->toko_pp != null) {
-                        $old_toko_pp = $toko->toko_pp;
-                        $old_toko_pp_path = public_path('storage/public/' . $old_toko_pp);
-                        unlink($old_toko_pp_path);
-                    }
-
-                    // delete old toko_bg
-                    if ($toko->toko_bg != null) {
-                        $old_toko_bg = $toko->toko_bg;
-                        $old_toko_bg_path = public_path('storage/public/' . $old_toko_bg);
-                        unlink($old_toko_bg_path);
-                    }
-
                     // upload new toko_pp
                     if ($request->file('toko_pp')) {
+                        // delete old toko_pp
+                        if ($toko->toko_pp != null) {
+                            $old_toko_pp = $toko->toko_pp;
+                            $old_toko_pp_path = public_path('storage/public/' . $old_toko_pp);
+                            unlink($old_toko_pp_path);
+                        }
+
                         $toko_pp = $request->file('toko_pp');
                         $toko_pp_name = time() . '.' . $toko_pp->extension();
                         $toko_pp->storeAs('public/toko_pp', $toko_pp_name);
@@ -178,6 +171,13 @@ class TokoController extends Controller
 
                     // upload new toko_bg
                     if ($request->file('toko_bg')) {
+                        // delete old toko_bg
+                        if ($toko->toko_bg != null) {
+                            $old_toko_bg = $toko->toko_bg;
+                            $old_toko_bg_path = public_path('storage/public/' . $old_toko_bg);
+                            unlink($old_toko_bg_path);
+                        }
+
                         $toko_bg = $request->file('toko_bg');
                         $toko_bg_name = time() . '.' . $toko_bg->extension();
                         $toko_bg->storeAs('public/toko_bg', $toko_bg_name);
