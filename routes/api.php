@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\FavProductController;
 use App\Http\Controllers\KonsumenController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PengusahaController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TokoController;
@@ -23,7 +25,7 @@ kontol!!
 
 // login regis
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('login', [AuthController::class, 'login']);
+    Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('register', [AuthController::class, 'register']);
 });
 
@@ -101,4 +103,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
     Route::get('pengusaha', [PengusahaController::class, 'pengusaha']);
     // delete user
     Route::delete('delete/{id}', [AuthController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'chat', 'middleware' => ['auth:sanctum']], function () {
+    Route::post('sentMessage/{id}', [MessageController::class, 'sentMessage']);
+    Route::get('getConversationByUserId/{id}', [ConversationController::class, 'getConversationByUserId']);
 });
