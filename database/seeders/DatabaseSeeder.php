@@ -28,17 +28,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com'
         ]);
 
-        // // Create pengusaha and konsumen base on user
-        // Toko::factory(10)->create(); // already create pengusaha and user
-        // Konsumen::factory(10)->create(); // already create user
+        // Create pengusaha and konsumen base on user
+        Toko::factory(10)->create(); // already create pengusaha and user
+        Konsumen::factory(10)->create(); // already create user
 
-        // // produk
-        // Produk::factory(10)->create();
-        // // fav_product
-        // Fav_product::factory(10)->create();
-        // // Penjualan_produk
-        // Penjualan_produk::factory(10)->create();
-        // // produk_images
-        // Produk_image::factory(10)->create();
+        // produk
+        Produk::factory(10)->create();
+        // fav_product
+        Fav_product::factory(10)->create();
+        // Penjualan_produk
+        Penjualan_produk::factory(10)->create();
+        // produk_images
+        Produk_image::factory(10)->create();
     }
 }

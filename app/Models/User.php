@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Messages;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,5 +54,9 @@ class User extends Authenticatable
     public function konsumen()
     {
         return $this->hasOne(Konsumen::class, 'user_id');
+    }
+
+    public function messages(){
+        return $this->hasMany(Messages::class, 'user_id');
     }
 }
