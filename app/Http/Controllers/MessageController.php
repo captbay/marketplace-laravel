@@ -31,19 +31,19 @@ class MessageController extends Controller
             $receiver = $admin;
             
         } else {
+            $receiver = User::find($id);
+            
             // nyimpen message di conversation table sender id admin, receiver user
-            if($user->role == 'KONSUMEN' || $user->role == 'PENGUSAHA'){
+            if($user->role == $receiver->role){
                 return response()->json([
                     'success' => false,
-                    'message' => "Can't send message to another user!",
+                    'message' => "Can't send message to this user!",
                 ], 403);
             }else{
                 $conversation = $message->conversation()->create([
                     'sender_id' => $message->user_id,
-                    'receiver_id' => $id
+                    'receiver_id' => $receiver->id
                 ]);
-
-                $receiver = User::find($id);
             }
 
         }
