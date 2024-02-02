@@ -108,4 +108,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
 Route::group(['prefix' => 'chat', 'middleware' => ['auth:sanctum']], function () {
     Route::post('sentMessage/{id}', [MessageController::class, 'sentMessage']);
     Route::get('getConversationByUserId/{id}', [ConversationController::class, 'getConversationByUserId']);
+    Route::get('getAllConversations', [ConversationController::class, 'getAllConversations']);
 });
