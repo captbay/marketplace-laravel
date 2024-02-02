@@ -15,4 +15,14 @@ class Conversations extends Model
     {
         return $this->belongsTo(Messages::class);
     }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function receiver()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
