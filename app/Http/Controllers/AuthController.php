@@ -22,6 +22,7 @@ class AuthController extends Controller
             $validatedData = Validator::make($request->all(), [
                 'email' => 'required',
                 'password' => 'required',
+                'fcm_token' => 'required'
             ]);
 
             //response error validation
@@ -41,8 +42,14 @@ class AuthController extends Controller
 
             // if password is correct
             if (Hash::check($request->password, $user->password, [])) {
+
+
+
                 // check role
                 if ($user->role == 'KONSUMEN') {
+                    $user->fcm_token = $request->fcm_token;
+                    $user->save();
+
                     // get data KONSUMEN
                     $data = $user->konsumen;
 
@@ -61,6 +68,9 @@ class AuthController extends Controller
                         'access_token' => $token
                     ], 200);
                 } else if ($user->role == 'PENGUSAHA') {
+                    $user->fcm_token = $request->fcm_token;
+                    $user->save();
+
                     // get data PENGUSAHA
                     $data = $user->pengusaha;
 
@@ -80,6 +90,9 @@ class AuthController extends Controller
                         'access_token' => $token
                     ], 200);
                 } else if ($user->role == 'admin') {
+                    $user->fcm_token = $request->fcm_token;
+                    $user->save();
+
                     return response()->json([
                         'data' => null,
                         'email' => $user->email,
@@ -125,6 +138,7 @@ class AuthController extends Controller
                 'address' => 'required|string',
                 'gender' => 'required|string|in:MALE,FEMALE,RATHER NOT SAY',
                 'role' => 'required|string|in:KONSUMEN,PENGUSAHA',
+                'fcm_token' => 'required'
             ]);
 
             //response error validation
@@ -139,6 +153,7 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'role' => $request->role,
+                    'fcm_token' => $request->fcm_token
                 ]);
 
                 // create konsumen
@@ -160,6 +175,7 @@ class AuthController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'role' => $request->role,
+                    'fcm_token' => $request->fcm_token
                 ]);
 
                 // create pengusaha
@@ -253,7 +269,13 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        Auth::user()->currentAccessToken()->delete();
+        $user = Auth::user();
+        $userLogout = User::find($user->id);
+
+        $userLogout->fcm_token = null;
+        $userLogout->save();
+        
+        $user->currentAccessToken()->delete();
 
         return response()->json([
             'message' => 'Logged out',

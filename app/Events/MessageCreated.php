@@ -35,9 +35,6 @@ class MessageCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel(name: 'messages');
-        // return [
-        //     new PrivateChannel('channel-name'),
-        // ];
+        return new Channel(name: 'messages_' . $this->receiver->id);
     }
 }

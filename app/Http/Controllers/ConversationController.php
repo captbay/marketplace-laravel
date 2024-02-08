@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conversations;
-use App\Models\Toko;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -55,7 +53,7 @@ class ConversationController extends Controller
                 })
                 ->groupBy(DB::raw('IF(sender_id = ' . $userId . ', receiver_id, sender_id)'));
         })
-            ->orderBy('created_at', 'desc')->with('messages', 'sender', 'receiver')
+            ->orderBy('created_at', 'desc')->with('messages', 'sender.konsumen', 'receiver.konsumen', 'sender.pengusaha.toko', 'receiver.pengusaha.toko')
             ->get();
 
         return response()->json([

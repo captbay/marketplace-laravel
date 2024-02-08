@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'fcm_token'
     ];
 
     /**
@@ -66,5 +67,11 @@ class User extends Authenticatable
 
     public function receiver(){
         return $this->hasOne(Conversations::class, 'receiver_id');
+    }
+
+    public function routeNotificationForFcm()
+    {
+        // return "fQ90QIpqTk-ZVqxHo8Ojyi:APA91bFbcBQOPVPBRXUKy6hLlaPltf4c3E1u3x8CGSw_2492hq06-UA9JmH1-302MOHm--H4iUGnyGomzwWWdhYtLrxCJZrrd1grd2W9oh8-_tjEaazC36c1jjpzhd9j-HFiMWOnaUAw";
+        return $this->fcm_token;
     }
 }
