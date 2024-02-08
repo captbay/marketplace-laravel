@@ -162,7 +162,7 @@ class ProdukController extends Controller
             ], 404);
         }
 
-        $data = Produk::with('produk_image', 'toko');
+        $data = Produk::with('produk_image', 'toko.pengusaha.user');
 
         // if user is KONSUMEN
         if (Auth::user()->role == 'KONSUMEN') {
