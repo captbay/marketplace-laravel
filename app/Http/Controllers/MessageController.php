@@ -53,23 +53,22 @@ class MessageController extends Controller
             'conversation' => $conversation
         ];
 
-        if($user->role == "PENGUSAHA"){
-            $user_logged = $user::with('pengusaha')->first();
+        if ($user->role == "PENGUSAHA") {
+            $user_logged = User::with('pengusaha')->find($user->id);
             $user_name = $user_logged->pengusaha->name;
-        }else if($user->role == "KONSUMEN"){
-            $user_logged = $user::with('konsumen')->first();
+        } else if ($user->role == "KONSUMEN") {
+            $user_logged = User::with('konsumen')->find($user->id);
             $user_name = $user_logged->konsumen->name;
-        }else{
+        } else {
             $user_name = "Admin";
         }
 
-        broadcast(new MessageCreated($request->message, $user, $receiver))->toOthers();
-
         $notification_config = [
-            "title" => "Message from " + $user_name,
+            "title" => "Message from " . $user_name,
             "body" => $request->message
         ];
 
+        broadcast(new MessageCreated($request->message, $user, $receiver))->toOthers();
         $this->sentNotification($notification_config, $receiver);
 
         return response()->json([
