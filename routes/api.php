@@ -10,6 +10,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TokoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Mime\MessageConverter;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +107,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum']], function (
 });
 
 Route::group(['prefix' => 'chat', 'middleware' => ['auth:sanctum']], function () {
+    // post message to others
     Route::post('sentMessage/{id}', [MessageController::class, 'sentMessage']);
+    // get all conversation (chat room)
     Route::get('getConversationByUserId/{id}', [ConversationController::class, 'getConversationByUserId']);
+    // get all chat with other
     Route::get('getAllConversations', [ConversationController::class, 'getAllConversations']);
+    // trigger notification to receiver
+    Route::post('sentNotification/{id}', [MessageController::class, 'triggerNotification']);
 });
